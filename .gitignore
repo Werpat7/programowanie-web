@@ -1,0 +1,15 @@
+#zależności
+node_modules/
+
+#zmienne środowiskowe - Nigdy nie commitujemy
+.env
+
+#katalogi budowania
+dist/
+build/
+
+#system i edytor
+Thumbs.db
+.DS_Store
+
+
