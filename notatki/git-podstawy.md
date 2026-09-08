@@ -1,0 +1,2 @@
+komendy co rabią:
+wiem
