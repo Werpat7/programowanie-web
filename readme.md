@@ -7,3 +7,5 @@ repozytorium z zadaniami z przedmiotu
 # Technologie
 
 # struktura repozytorium
+notatki
+zadania
