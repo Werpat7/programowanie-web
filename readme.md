@@ -1,4 +1,4 @@
-# programowanie aplikacji zaawansowanych webowych 
+# programowanie aplikacji zaawansowanych webowyh
 
 repozytorium z zadaniami z przedmiotu
 
