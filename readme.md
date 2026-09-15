@@ -12,3 +12,6 @@ zadania
 
 # Uruchamianie:
 github
+
+# narzedzia:
+github, vscode
