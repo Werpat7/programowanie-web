@@ -9,3 +9,6 @@ repozytorium z zadaniami z przedmiotu
 # struktura repozytorium
 notatki
 zadania
+
+# Uruchamianie:
+github
