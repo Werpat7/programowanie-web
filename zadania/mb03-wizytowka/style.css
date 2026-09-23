@@ -1,0 +1,40 @@
+*{
+    box-sizing: border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    font-family: Georgia;
+    max-width: 800px;
+    margin: 0 auto;
+    color: #222222;
+    background-color: #ffffff;
+}
+
+section{
+    padding: 20px 0;
+    border-bottom: 1px solid #eeeeee
+}
+
+nav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: warp;
+}
+
+nav a {
+    color: #0b5ed7;
+    text-decoration: none;
+    padding: 6px 0;
+    border-bottom: 2px solid transparent;
+}
+
+nav a:hover{
+    border-bottom-color: #0b5ed7;
+}
+
