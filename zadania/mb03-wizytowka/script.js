@@ -2,7 +2,7 @@ let umiejętności = ["zamiatanie", "programowanie", "psucie programów", "licze
 
 let lista = document.querySelector("#lista-umiejetnosci");
 for (i of umiejętności){
-    punkt = document.createElement("li")
+    punkt = document.createElement("li");
     punkt.textContent = i;
     lista.appendChild(punkt);
     console.log(punkt)
