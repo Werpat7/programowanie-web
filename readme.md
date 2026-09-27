@@ -15,5 +15,3 @@ github
 
 # narzedzia:
 github, vscode
-
-testtest
