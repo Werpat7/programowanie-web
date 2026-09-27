@@ -24,5 +24,6 @@ przeslij.addEventListener("submit", (event)=>{
     else{
         oknoZKomunikatem.style.color = "black"
         oknoZKomunikatem.textContent = `Przesłamo wiadomość od ${imie} o temacie ${temat}`
+        przeslij.reset()
     }
 });
