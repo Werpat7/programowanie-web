@@ -5,7 +5,6 @@ for (i of umiejętności){
     punkt = document.createElement("li");
     punkt.textContent = i
     lista.appendChild(punkt)
-    console.log(punkt)
 }
 const przeslij = document.getElementById("przeslij")
 
@@ -22,8 +21,14 @@ przeslij.addEventListener("submit", (event)=>{
         oknoZKomunikatem.textContent = "Proszę wypełnić pola imię oraz email"
     }
     else{
-        oknoZKomunikatem.style.color = "black"
-        oknoZKomunikatem.textContent = `Przesłamo wiadomość od ${imie} o temacie ${temat}`
+        oknoZKomunikatem.style.color = "green"
+        oknoZKomunikatem.textContent = `Przesłano wiadomość od ${imie} o temacie ${temat}`
         przeslij.reset()
     }
-});
+})
+
+const ciemny = document.getElementById("ciemny")
+
+ciemny.addEventListener("click", ()=>{
+    document.body.classList.toggle("ciemny")
+})
