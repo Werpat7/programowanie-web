@@ -6,11 +6,14 @@ let umiejętności = [
     {nazwa:"granie", poziom: 5, kategoria: "odpoczywanie"}]
 
 let lista = document.querySelector("#lista-umiejetnosci")
-for (i of umiejętności){
-    punkt = document.createElement("li");
-    punkt.textContent = i
-    lista.appendChild(punkt)
-}
+lista
+    .map(({nazwa, poziom, kategoria}) => `<li>${nazwa}, ${poziom}, ${kategoria}</li>`)
+    .join("")
+// for (i of umiejętności){
+//     punkt = document.createElement("li");
+//     punkt.textContent = i
+//     lista.appendChild(punkt)
+// }
 const przeslij = document.getElementById("przeslij")
 
 przeslij.addEventListener("submit", (event)=>{
