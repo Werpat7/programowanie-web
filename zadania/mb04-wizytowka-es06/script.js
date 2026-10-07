@@ -1,19 +1,43 @@
-let umiejętności = [
+let umiejetnosci = [
     {nazwa:"HTML", poziom: 4, kategoria: "frontend"}, 
     {nazwa:"CSS", poziom: 3, kategoria: "frontend"}, 
     {nazwa:"SQL", poziom: 5, kategoria: "backend"},
     {nazwa:"Javascript", poziom: 2, kategoria: "frontend"},
-    {nazwa:"granie", poziom: 5, kategoria: "odpoczywanie"}]
+    {nazwa:"granie", poziom: 5, kategoria: "odpoczywanie"}
+]
 
 let lista = document.querySelector("#lista-umiejetnosci")
-lista
+
+lista.innerHTML = umiejetnosci
     .map(({nazwa, poziom, kategoria}) => `<li>${nazwa}, ${poziom}, ${kategoria}</li>`)
     .join("")
-// for (i of umiejętności){
-//     punkt = document.createElement("li");
-//     punkt.textContent = i
-//     lista.appendChild(punkt)
-// }
+
+let listaUM = umiejetnosci
+    .reduce(x => x += 1, 0)
+
+let sumaPoziomow = umiejetnosci
+    .reduce((suma, {poziom}) => suma += poziom, 0)
+
+document.getElementById("sredniPoziom").innerHTML =
+    `Umiejętności: ${listaUM} średni poziom: ${Math.round(sumaPoziomow / listaUM)}`
+
+document.getElementById("filtruj").addEventListener("click", () => {
+
+    let wartosc = document.getElementById("filtrowanie").value
+
+    if (wartosc === "wszystkie") {
+        lista.innerHTML = umiejetnosci
+            .map(({nazwa, poziom}) => `<li>${nazwa} ${poziom}</li>`)
+            .join("")
+    }
+    else {
+        lista.innerHTML = umiejetnosci
+            .filter(({kategoria}) => kategoria === wartosc)
+            .map(({nazwa, poziom}) => `<li>${nazwa} ${poziom}</li>`)
+            .join("")
+    }
+})
+
 const przeslij = document.getElementById("przeslij")
 
 przeslij.addEventListener("submit", (event)=>{
