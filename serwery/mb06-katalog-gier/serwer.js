@@ -18,6 +18,15 @@ app.get("/gry", (req, res) => {
     res.json(gry);
 });
 
-app.listen(3000, ()=>{
+app.get("/gry/:id", (req, res) => {
+    const gra = gry.find(g => g.id === Number(req.params.id));
+    if(!gra){
+        res.status(404).json({blad: "nie znaleziono takiej podstrony"})
+        return;
+    }
+    res.json(gra);
+})
+
+app.listen(3000, () => {
     console.log("Serwer działa: http://localhost:3000")
 });
