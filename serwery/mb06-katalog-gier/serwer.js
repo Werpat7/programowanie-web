@@ -1,9 +1,14 @@
 import express from "express";
+import {gry} from "./dane.js"
 
 const app = express();
 
 app.get("/gry", (req, res) => {
     res.send("powinno sie zmienic");
+});
+
+app.get("/gry-planszowe", (req, res) => {
+    res.json(gry);
 });
 
 app.listen(3000, ()=>{
