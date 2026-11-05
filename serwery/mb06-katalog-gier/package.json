@@ -2,7 +2,8 @@
   "name": "mb06-katalog-gier",
   "version": "1.0.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node serwer.js",
+    "dev": "nodemon serwer.js"
   },
   "keywords": [],
   "author": "",
@@ -12,5 +13,8 @@
   "description": "Serwer katalog gier planszowych",
   "dependencies": {
     "express": "^5.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }
