@@ -3,6 +3,9 @@ import {gry} from "./dane.js"
 
 const app = express();
 
+// Metoda: GET
+// Adres: /
+// Przeznaczenie: Wyświetla stronę główną z listą dostępnych endpointów.
 app.get("/", (req, res) => {
     res.send(`<h1>Katalog gier planszowych</h1>
         <ul>
@@ -14,10 +17,17 @@ app.get("/", (req, res) => {
         );
 });
 
+// Metoda: GET
+// Adres: /gry
+// Przeznaczenie: Zwraca listę wszystkich gier w formacie JSON.
 app.get("/gry", (req, res) => {
     res.json(gry);
 });
 
+// Metoda: GET
+// Adres: /gry/:id
+// Przeznaczenie: Zwraca szczegółowe informacje o grze o podanym ID.
+// Parametr URL: id – identyfikator gry.
 app.get("/gry/:id", (req, res) => {
     const gra = gry.find(g => g.id === Number(req.params.id));
     if(!gra){
@@ -27,6 +37,13 @@ app.get("/gry/:id", (req, res) => {
     res.json(gra);
 });
 
+// Metoda: GET
+// Adres: /szukaj
+// Przeznaczenie: Wyszukuje i filtruje gry według podanych kryteriów.
+// Parametry query:
+// - wydawca – nazwa wydawcy gry.
+// - max – maksymalna cena gry.
+// - gracze – minimalna liczba graczy.
 app.get("/szukaj", (req, res)=>{
     const {wydawca, max, gracze} = req.query;
     let gryFiltrowane = gry;
@@ -44,6 +61,10 @@ app.get("/szukaj", (req, res)=>{
     res.json(gryFiltrowane);
 });
 
+// Metoda: GET
+// Adres: /statystyki
+// Przeznaczenie: Zwraca statystyki katalogu gier:
+// liczbę gier, średnią cenę oraz nazwę najdroższej gry.
 app.get("/statystyki", (req, res) => {
     let ilGier = gry.length;
 
