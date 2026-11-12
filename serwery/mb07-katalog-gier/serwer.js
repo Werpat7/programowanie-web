@@ -3,6 +3,13 @@ import {gry} from "./dane.js"
 
 const app = express();
 
+const logger = (req, res, next) => {
+    req.czasZadania = new Date().toLocaleTimeString("pl-PL");
+    console.log(`[${req.czasZadania}] ${req.method} ${req.url}`);
+    next();
+}
+
+app.use(logger);
 // Metoda: GET
 // Adres: /
 // Przeznaczenie: Wyświetla stronę główną z listą dostępnych endpointów.
