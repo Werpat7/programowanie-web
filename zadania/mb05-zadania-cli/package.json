@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "lista": "node app.js lista",
+    "dodaj": "node app.js dodaj",
+    "zrobione": "node app.js zroboine",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
