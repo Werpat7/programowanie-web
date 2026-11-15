@@ -5,6 +5,18 @@ import path from "node:path";
 
 const app = express();
 
+/**
+ * Middleware zapisujący czas otrzymania żądania oraz jego metodę i adres w konsoli.
+ * Dodatkowo zapisuje aktualny czas w obiekcie request.
+ *
+ * @param {import("express").Request} req - Obiekt żądania HTTP.
+ * @param {import("express").Response} res - Obiekt odpowiedzi HTTP.
+ * @param {import("express").NextFunction} next - Funkcja przekazująca obsługę dalej.
+ * @returns {void}
+ */
+
+app.use(logger);
+
 const logger = (req, res, next) => {
     req.czasZadania = new Date().toLocaleTimeString("pl-PL");
     console.log(`[${req.czasZadania}] ${req.method} ${req.url}`);
@@ -15,8 +27,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 
 app.use(express.static(path.join(import.meta.dirname, "public")));
-
-app.use(logger);
 
 app.use("/gry", routerGier);
 // Metoda: GET
@@ -79,6 +89,10 @@ app.post("/echo", (req, res) => {
     console.log(req.body);
     res.json({ odebrano: req.body });
 });
+
+app.get("/blad", () => {
+    throw new Error("Testowy błąd");
+})
 
 app.use((req, res) => {
     const czyDane = ["/gry", "/szukaj", "/statystyki"].some((p)=>
