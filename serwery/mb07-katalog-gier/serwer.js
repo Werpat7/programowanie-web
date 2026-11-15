@@ -1,5 +1,6 @@
 import express from "express";
 import {gry} from "./dane.js"
+import routerGier from "./trasy/gry.js";
 import path from "node:path";
 
 const app = express();
@@ -16,30 +17,8 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.static(path.join(import.meta.dirname, "public")));
 
 app.use(logger);
-// Metoda: GET
-// Adres: /
-// Przeznaczenie: Wyświetla stronę główną z listą dostępnych endpointów.
 
-// Metoda: GET
-// Adres: /gry
-// Przeznaczenie: Zwraca listę wszystkich gier w formacie JSON.
-app.get("/gry", (req, res) => {
-    res.json(gry);
-});
-
-// Metoda: GET
-// Adres: /gry/:id
-// Przeznaczenie: Zwraca szczegółowe informacje o grze o podanym ID.
-// Parametr URL: id – identyfikator gry.
-app.get("/gry/:id", (req, res) => {
-    const gra = gry.find(g => g.id === Number(req.params.id));
-    if(!gra){
-        res.status(404).json({blad: "nie znaleziono takiej podstrony"})
-        return;
-    }
-    res.json(gra);
-});
-
+app.use("/gry", routerGier);
 // Metoda: GET
 // Adres: /szukaj
 // Przeznaczenie: Wyszukuje i filtruje gry według podanych kryteriów.
