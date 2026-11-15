@@ -29,8 +29,21 @@ const dodaj = async tekst =>{
   }
 }
 
-console.log("Komenda:", komenda);
-console.log("Argument:", argument);
+const zrobione = async numer =>{
+  const zadania = await wczytaj();
+
+  if(!Number.isInteger(numer) || numer < 1 || numer > zadania.length){
+    console.error("Nieprawidłowy zakres.");
+  }
+  else{
+    const nowe = zadania.map((zadanie, i) =>
+      i === numer - 1 ? { ...zadanie, zrobione: true } : zadanie
+    );
+
+    await zapisz(nowe);
+    console.log(`Zapisano ${nowe[numer - 1].tekst} jako zrobione`);
+  }
+}
 
 switch(komenda){
   case "lista":
@@ -38,5 +51,8 @@ switch(komenda){
     break;
   case "dodaj":
     await dodaj(argument);
+    break;
+  case "zrobione":
+    await zrobione(Number(argument));
     break;
 }
