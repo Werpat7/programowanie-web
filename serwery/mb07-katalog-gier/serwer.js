@@ -92,6 +92,11 @@ app.use((req, res) => {
 res.status(404).send("<h1>404 - nie ma takiej strony</h1>");
 });
 
+app.use((err, req, res, next) => {
+    console.error("Błąd:", err.message);
+    res.status(500).json({ blad: "Błąd serwera "});
+});
+
 app.listen(3000, () => {
     console.log("Serwer działa: http://localhost:3000")
 });
