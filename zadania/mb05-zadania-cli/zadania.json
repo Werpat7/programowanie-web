@@ -1,0 +1,14 @@
+[
+  {
+    "tekst": "kupić mleko",
+    "zrobione": true
+  },
+  {
+    "tekst": "oddać książkę",
+    "zrobione": false
+  },
+  {
+    "tekst": "sas",
+    "zrobione": false
+  }
+]

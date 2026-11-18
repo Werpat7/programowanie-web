@@ -1,0 +1,116 @@
+import express from "express";
+import {gry} from "./dane.js"
+import routerGier from "./trasy/gry.js";
+import path from "node:path";
+
+const app = express();
+
+/**
+ * Middleware zapisujący czas otrzymania żądania oraz jego metodę i adres w konsoli.
+ * Dodatkowo zapisuje aktualny czas w obiekcie request.
+ *
+ * @param {import("express").Request} req - Obiekt żądania HTTP.
+ * @param {import("express").Response} res - Obiekt odpowiedzi HTTP.
+ * @param {import("express").NextFunction} next - Funkcja przekazująca obsługę dalej.
+ * @returns {void}
+ */
+
+app.use(logger);
+
+const logger = (req, res, next) => {
+    req.czasZadania = new Date().toLocaleTimeString("pl-PL");
+    console.log(`[${req.czasZadania}] ${req.method} ${req.url}`);
+    next();
+}
+app.use(express.json());
+
+app.use(express.urlencoded({extended: true}))
+
+app.use(express.static(path.join(import.meta.dirname, "public")));
+
+app.use("/gry", routerGier);
+// Metoda: GET
+// Adres: /szukaj
+// Przeznaczenie: Wyszukuje i filtruje gry według podanych kryteriów.
+// Parametry query:
+// - wydawca – nazwa wydawcy gry.
+// - max – maksymalna cena gry.
+// - gracze – minimalna liczba graczy.
+app.get("/szukaj", (req, res)=>{
+    const {wydawca, max, gracze} = req.query;
+    let gryFiltrowane = gry;
+
+    if(wydawca){
+        gryFiltrowane = gryFiltrowane.filter(g => g.wydawca.toLowerCase() === wydawca.toLowerCase())
+    }
+    if(max){
+        gryFiltrowane = gryFiltrowane.filter(g => g.cena <= Number(max))
+    }
+    if(gracze){
+        gryFiltrowane = gryFiltrowane.filter(g => g.gracze >= Number(gracze))
+    }
+
+    res.json(gryFiltrowane);
+});
+
+// Metoda: GET
+// Adres: /statystyki
+// Przeznaczenie: Zwraca statystyki katalogu gier:
+// liczbę gier, średnią cenę oraz nazwę najdroższej gry.
+app.get("/statystyki", (req, res) => {
+    let ilGier = gry.length;
+
+    let wynik = gry.reduce((acc, gra) => {
+        acc.suma += gra.cena;
+
+        if (gra.cena > acc.najdrozszaCena) {
+            acc.najdrozszaCena = gra.cena;
+            acc.najdrozszaNazwa = gra.nazwa;
+        }
+
+        return acc;
+    }, {
+        suma: 0,
+        najdrozszaCena: 0,
+        najdrozszaNazwa: ""
+    });
+
+    let srednia = Math.round((wynik.suma / ilGier) * 100) / 100;
+
+    res.json({
+        liczbaGier: ilGier,
+        sredniaCena: srednia,
+        najdrozsza: wynik.najdrozszaNazwa,
+        wygenerowano: req.czasZadania
+    });
+});
+
+app.post("/echo", (req, res) => {
+    console.log(req.body);
+    res.json({ odebrano: req.body });
+});
+
+app.get("/blad", () => {
+    throw new Error("Testowy błąd");
+})
+
+app.use((req, res) => {
+    const czyDane = ["/gry", "/szukaj", "/statystyki"].some((p)=>
+    req.url.startsWith(p));
+
+    if(czyDane){
+        res.status(404).json({ blad: "Nie ma takiej trasy" });
+        return;
+    }
+
+res.status(404).send("<h1>404 - nie ma takiej strony</h1>");
+});
+
+app.use((err, req, res, next) => {
+    console.error("Błąd:", err.message);
+    res.status(500).json({ blad: "Błąd serwera "});
+});
+
+app.listen(3000, () => {
+    console.log("Serwer działa: http://localhost:3000")
+});
